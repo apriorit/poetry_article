@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.system.configMapName }}
+
+data:
+
+  # Host
+  ORDER_MANAGER_HOST: "{{ .Values.apps.orderManager.name }}"
+  USER_MANAGER_HOST: "{{ .Values.apps.userManager.name }}"
+
+
+  # Microservice ports
+  ORDER_MANAGER_PORT: "{{ .Values.apps.orderManager.port }}"
+  USER_MANAGER_PORT: "{{ .Values.apps.userManager.port }}"

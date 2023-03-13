@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.apps.orderManager.name }}
+spec:
+  selector:
+    app: {{ .Values.apps.orderManager.name }}
+  ports:
+    - port: {{ .Values.apps.orderManager.port }}
+      targetPort: {{ .Values.apps.orderManager.port }}
+      nodePort: {{ .Values.apps.orderManager.port }}
+  type: LoadBalancer
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.apps.orderManager.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.apps.orderManager.name }}
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.apps.orderManager.name }}
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: {{ .Values.apps.orderManager.name }}
+          image: {{ .Values.apps.orderManager.image }}:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: {{ .Values.apps.orderManager.port }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.system.configMapName }}

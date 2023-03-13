@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.apps.userManager.name }}
+spec:
+  selector:
+    app: {{ .Values.apps.userManager.name }}
+  ports:
+    - port: {{ .Values.apps.userManager.port }}
+      targetPort: {{ .Values.apps.userManager.port }}
+      nodePort: {{ .Values.apps.userManager.port }}
+  type: LoadBalancer
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.apps.userManager.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.apps.userManager.name }}
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.apps.userManager.name }}
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: {{ .Values.apps.userManager.name }}
+          image: {{ .Values.apps.userManager.image }}:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: {{ .Values.apps.userManager.port }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.system.configMapName }}

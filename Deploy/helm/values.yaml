@@ -1,0 +1,13 @@
+system:
+  configMapName: system-config
+
+apps:
+  orderManager:
+    name: order-manager
+    image: order_manager
+    port: 30001
+
+  userManager:
+    name: user-manager
+    image: user_manager
+    port: 30002
