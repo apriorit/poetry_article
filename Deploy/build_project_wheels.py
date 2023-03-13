@@ -5,7 +5,7 @@ import shutil
 import subprocess
 import pkg_resources
 
-EXCLUDE_PROJECTS = ['Deploy', 'Front', 'venv']
+EXCLUDE_PROJECTS = ['Deploy', 'venv']
 CMD_CREATE_WHEEL = '{0} {1} bdist_wheel -d {2}'
 ROOT_PATH = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir))
 OUTPUT_ARTIFACTS = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'artifacts'))
